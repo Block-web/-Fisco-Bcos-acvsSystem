@@ -78,6 +78,7 @@ VITE_OSS_ACCESS_KEY_ID=your_access_key
 VITE_OSS_ACCESS_KEY_SECRET=your_secret
 ```
 
+
 **启动开发服务器**
 ```bash
 npm run dev
@@ -100,6 +101,23 @@ spring:
     username: your_username
     password: your_password
 ```
+**配置阿里云OSS**  （如果不使用环境变量）
+1.你需要登录学习使用,配置阿里云OSS,有自己的bucket  如果没有可以参考B站教程
+2.配置AliOssUtils 工具类
+  字段如下 :
+      ENDPOINT
+      ACCESS_KEY_ID
+      ACCESS_KEY_SECRET
+      BUCKET_NAME
+      region  写在了方法里面 我也不知道自己咋想的
+3.请先测试一下能不能正常上传本地文件到自己的buckt     
+
+**初始化区块链** 
+所有区块链业务都在 CertificateController.java 中 你需要先拿到合约在fiscobcos上部署然后
+拿到合约地址 将其配置到控制类中
+需要修改的字段如下：
+    //合约地址
+    CONTRACTADDRESS = "0xc8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085"
 
 **启动后端服务**
 ```bash
@@ -132,20 +150,18 @@ docker run -d --name fisco-bcos-node \
 ```
 
 **部署智能合约**
-1. 访问WeBASE管理平台：http://localhost:5002
+1. 访问WeBASE管理平台： http://虚拟机IP地址:5002/WeBASE-Front/#/home
 2. 上传 `CertHashRegistry.sol` 合约
 3. 部署合约并记录合约地址
 
 **配置区块链连接**
-修改 `application.yml` 添加区块链配置：
-```yaml
-fisco-bcos:
-  group-id: 1
-  peers:
-    - 127.0.0.1:20200
-  contract:
-    cert-hash-registry: "0xYourContractAddress"
+修改 `config.toml` 区块链配置：
 ```
+字段
+peers=["192.168.1.3:20200", "192.168.1.3:20201", "192.168.1.3:20202", "192.168.1.3:20203"]
+端口号不变的情况下 需要修改 ip地址为虚拟机地址 ps：虚拟机我只测试过桥接模式（要与主机在一个网关下）
+```
+
 
 
 ## ⚠️ 项目缺点与限制
@@ -192,7 +208,8 @@ fisco-bcos:
 
 - 项目主页: [GitHub Repository](https://github.com/Block-web/acvsSystem)
 - 问题反馈: [Issues](https://github.com/Block-web/acvsSystem/issues)
-
+- 我很菜 如果你有什么建议 可以联系我 我们可以一起探讨一下
+- 如果需要虚拟机 也可也联系我
 ---
 
 **注意**: 公司业务逻辑部分尚未完成，使用时请忽略相关功能。生产环境部署前请进行充分测试和安全评估。
