@@ -73,7 +73,9 @@ npm install
 copy .env.example .env
 
 # 编辑.env文件
-VITE_API_BASE_URL=http://localhost:8080
+//跨域地址 默认为转到后端8081
+VITE_API_BASE_URL=http://localhost:8081
+//阿里云OSS的认证配置
 VITE_OSS_ACCESS_KEY_ID=your_access_key
 VITE_OSS_ACCESS_KEY_SECRET=your_secret
 ```
