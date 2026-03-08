@@ -204,9 +204,10 @@
 - **MySQL 8.0** - 数据库
 - **Maven** - 依赖管理
 - **Java 14** - 编程语言
+- **Redis** - 只用于存储Token-Jwt令牌
 
 ### 区块链技术
-- **FISCO BCOS 3.x** - 联盟链平台
+- **FISCO BCOS 3.7** - 联盟链平台
 - **WeBASE** - 区块链中间件
 - **智能合约** - 证书哈希注册
 
@@ -264,6 +265,10 @@ npm run dev
 访问 http://localhost:5173
 
 ### 2. 后端运行
+
+**开启Redis服务**
+在Redis文件夹下开启redis-server.exe,如果需要查看Token是否录入 可以在前端开发者页面的控制台看到输出的Jwt-Token
+在Redis中通过键值对（GET {tokenString}）tokenString为控制台输出得token 复制即可 ：键等于值得方式存储 并设置了6小时得过期时间
 
 **数据库配置**
 ```sql
