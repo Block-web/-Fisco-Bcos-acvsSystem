@@ -1,0 +1,10 @@
+{
+  "idCard": "110101200001011234",
+  "collegeId": 4,
+  "major": "计算机科学与技术",
+  "degreeType": "本科",
+  "graduationDate": "2025-06-30",
+  "pdfPath": "https://acvs.oss-cn-guangzhou.aliyuncs.com/apitest_cert.pdf",
+  "fileHash": "8f257842b96d4c055793be516dedd01562590d49e84444537e9fac667df2b063",
+  "status": 1
+}

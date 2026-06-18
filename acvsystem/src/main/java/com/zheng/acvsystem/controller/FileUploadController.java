@@ -2,14 +2,16 @@ package com.zheng.acvsystem.controller;
 
 import com.zheng.acvsystem.entity.Result;
 import com.zheng.acvsystem.utill.AliOssUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 
-
+@Api(tags = "文件上传控制器")
 @RestController
 public class FileUploadController {
+    @ApiOperation("文件上传接口")
     @PostMapping("/upload")   //MultipartFile类：封装了文件上传的相关信息
     public Result<String> upload(MultipartFile file) throws Exception {
         //1.把文件的内容存储到本地磁盘上

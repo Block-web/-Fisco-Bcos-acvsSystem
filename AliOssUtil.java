@@ -17,16 +17,16 @@ public class AliOssUtil {
     //EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
 
     // 定义两个变量用于存储访问凭证
-    private static final String ACCESS_KEY_ID = "";
-    private static final String ACCESS_KEY_SECRET = "";
+    private static final String ACCESS_KEY_ID = "LTAI5tRmon4iHzyoAonjXCwJ";
+    private static final String ACCESS_KEY_SECRET = "NLA9KWHOSvZhF4APNuXVaTUhGxjNga";
 
     // 填写Bucket名称，例如：web-learning-hush。
-    private static final String BUCKET_NAME = "";
+    private static final String BUCKET_NAME = "acvs";
 
     public static String uploadFile(String objectName, InputStream in) throws Exception {
 
         // 填写Bucket所在地域。以guangzhou为例，Region填写为cn-guangzhou。
-        String region = "";
+        String region = "cn-guangzhou";
 
         // 创建OSSClient实例。
         // 当OSSClient实例不再使用时，调用shutdown方法以释放资源。

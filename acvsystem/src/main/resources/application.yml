@@ -9,6 +9,18 @@ spring:
   redis:
     host: localhost  # 改为2个空格缩进
     port: 6379       # 改为2个空格缩进
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
+aliyun:
+  oss:
+    endpoint: https://oss-cn-guangzhou.aliyuncs.com
+    access-key-id: LTAI5tRmon4iHzyoAonjXCwJ
+    access-key-secret: NLA9KWHOSvZhF4APNuXVaTUhGxjNga
+    bucket-name: acvs
+    region: cn-guangzhou
 
+swagger:
+  enabled: true
 

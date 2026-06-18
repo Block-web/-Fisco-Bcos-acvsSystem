@@ -36,10 +36,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
             //通过JwtUtil工具类解析令牌（token）, 获取到业务数据claims
             Map<String, Object> claims = JwtUtil.parseToken(token);
-
             //把业务数据存储到ThreadLocal中
             ThreadLocalUtil.set(claims);
-
             //ture表示放行
             return true;
         } catch (Exception e) {

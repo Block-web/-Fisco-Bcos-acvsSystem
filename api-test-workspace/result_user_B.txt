@@ -1,0 +1,62 @@
+===== [U1] 查询用户信息-带COL token(密码应被隐藏) =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":{"id":4,"username":"apitest_col","role":"COLLEGE","realName":null,"idCard":null,"createTime":"2026-06-02T15:53:14"}}
+
+===== [U2] 异常-无token(应401) =====
+HTTP: 401
+BODY: 
+
+===== [U3] 异常-非法token(应401) =====
+HTTP: 401
+BODY: 
+
+===== [UP1] 正常更新基本信息-COLLEGE =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"用户信息更新成功"}
+
+===== [UP2] 异常-真实姓名缺失 =====
+HTTP: 200
+BODY: {"code":1,"message":"真实姓名或身份证号不能为空","data":null}
+
+===== [UP3] 异常-身份证格式错误 =====
+HTTP: 200
+BODY: {"code":1,"message":"身份证号格式错误","data":null}
+
+===== [UP4] 异常-身份证号已存在 =====
+HTTP: 200
+BODY: {"code":1,"message":"身份证号已存在","data":null}
+
+[DB] apitest_col 更新后记录:
+4	apitest_col	���Է���&���Դ�ѧ	110101199003078912
+
+########## update-password 测试 ##########
+[DB] 测试前全表密码快照:
+1	zzw123	4297f44b13955235245b2497399d7a93
+2	zzw456	4297f44b13955235245b2497399d7a93
+3	zzw789	4297f44b13955235245b2497399d7a93
+4	apitest_col	c06db68e819be6ec3d26c6038d8e8d1f
+5	apitest_stu	c06db68e819be6ec3d26c6038d8e8d1f
+6	apitest_com	c06db68e819be6ec3d26c6038d8e8d1f
+
+===== [PW1] 正常修改密码-apitest_col =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"密码更新成功"}
+
+[DB] 测试后全表密码快照(观察非目标用户密码是否被连带修改):
+1	zzw123	7fd3d24ae7080a6e1725f89213841fac
+2	zzw456	7fd3d24ae7080a6e1725f89213841fac
+3	zzw789	7fd3d24ae7080a6e1725f89213841fac
+4	apitest_col	7fd3d24ae7080a6e1725f89213841fac
+5	apitest_stu	7fd3d24ae7080a6e1725f89213841fac
+6	apitest_com	7fd3d24ae7080a6e1725f89213841fac
+[INFO] 字符串 newpass99 的标准MD5 = 7fd3d24ae7080a6e1725f89213841fac
+
+===== [PW2] 异常-用户不存在 =====
+HTTP: 200
+BODY: {"code":1,"message":"用户未登录","data":null}
+
+[RESTORE] 已执行 restore_password.sql
+[DB] 恢复后 id=1,2,3 密码(应恢复为123456的MD5:4297f44b13955235245b2497399d7a93):
+1	zzw123	4297f44b13955235245b2497399d7a93
+2	zzw456	4297f44b13955235245b2497399d7a93
+3	zzw789	4297f44b13955235245b2497399d7a93

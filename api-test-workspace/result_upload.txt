@@ -1,0 +1,16 @@
+===== [F1] 正常上传文件到OSS-带token =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":""}
+
+===== [F2] 异常-无token(应401) =====
+HTTP: 401
+BODY: 
+
+===== [F3] 边界-不携带文件参数 =====
+HTTP: 200
+BODY: {"code":1,"message":"Cannot invoke \"org.springframework.web.multipart.MultipartFile.getOriginalFilename()\" because \"file\" is null","data":null}
+
+===== [VR] 验证-apitest_col中文realName写入 =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":{"id":4,"username":"apitest_col","role":"COLLEGE","realName":"测试法人&测试大学","idCard":"110101199003078912","createTime":"2026-06-02T15:53:14"}}
+

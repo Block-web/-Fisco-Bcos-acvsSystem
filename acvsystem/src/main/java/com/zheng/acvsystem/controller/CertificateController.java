@@ -3,6 +3,9 @@ package com.zheng.acvsystem.controller;
 import com.zheng.acvsystem.entity.Certificate;
 import com.zheng.acvsystem.entity.Result;
 import com.zheng.acvsystem.service.CertificateService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.fisco.bcos.sdk.v3.BcosSDK;
 import org.fisco.bcos.sdk.v3.client.Client;
 import org.fisco.bcos.sdk.v3.codec.ContractCodecException;
@@ -32,6 +35,7 @@ import java.util.UUID;
  * @author zzw
  * @since 2026-01-15
  */
+@Api(tags = "证书控制器  ")
 @RestController
 @RequestMapping("/certificate")
 public class CertificateController {
@@ -46,6 +50,7 @@ public class CertificateController {
 
 
     //添加证书
+    @ApiOperation("添加证书接口")
     @PostMapping("/issue")
     public Result issue(@RequestBody @Validated Certificate certificate) throws TransactionBaseException, ContractCodecException, IOException {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -92,11 +97,48 @@ public class CertificateController {
     }
 
     //根据学生姓名获取证书信息中的url地址值
-    @GetMapping("get-certificate")
+    @ApiOperation("根据学生姓名获取证书信息中的url地址值接口")
+    @GetMapping("/get-certificate")
     public Result getCertificateByStudentName(@RequestParam @NotNull String studentName) {
         Certificate certificate = certificateService.lambdaQuery().eq(Certificate::getStudentName, studentName).one();
         String pdfPath = certificate.getPdfPath();
+        if (pdfPath == null) {
+            return Result.error("该学生未颁发证书");
+        }
         return Result.success(pdfPath);
+    }
+
+
+    @ApiOperation("撤销学生证书")
+    @PostMapping("/revoke")
+    public Result revokeCertificate(@RequestBody @NotNull String certNo) throws TransactionBaseException, ContractCodecException, IOException {
+        // 初始化BcosSDK对象
+        BcosSDK sdk = BcosSDK.build(CONFIG_FILE);
+        // 获取Client对象，此处传入的群组名 group0
+        Client client = sdk.getClient("group0");
+        // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
+        CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
+        AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, ABI_CONFIGPATH, BIN_CONFIGPATH);
+        // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
+        TransactionResponse response = transactionProcessor.deployByContractLoader("CertHashRegistry", new ArrayList<>());
+        // 创建调用交易函数的参数，此处为传入一个参数
+        List<Object> params = new ArrayList<>();
+        //在参数中添加要撤销证书的证书号
+        params.add(certNo);
+        TransactionResponse transactionResponse = transactionProcessor.
+                sendTransactionAndGetResponseByContractLoader("CertHashRegistry", CONTRACTADDRESS, "revoke", params);
+        // 从 TransactionResponse 中获取交易回执
+        TransactionReceipt receipt = transactionResponse.getTransactionReceipt();
+        // 判断交易是否成功
+        String returnMessage = transactionResponse.getReturnMessage();
+        if (receipt != null && receipt.getStatus() == 0) {
+            certificateService.lambdaUpdate()
+                    .set(Certificate::getStatus,(byte) 0)
+                    .eq(Certificate::getCertNo,certNo)
+                    .update()
+                    ;
+        }
+        return Result.success("撤销成功："+returnMessage);
     }
 }
 
