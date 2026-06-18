@@ -26,7 +26,7 @@ public class AliOssUtil {
     public static String uploadFile(String objectName, InputStream in) throws Exception {
 
         // 填写Bucket所在地域。以guangzhou为例，Region填写为cn-guangzhou。
-        String region = "cn-guangzhou";
+        String region = "";
 
         // 创建OSSClient实例。
         // 当OSSClient实例不再使用时，调用shutdown方法以释放资源。
