@@ -105,11 +105,12 @@ const logout = async () => {
             <template #title>
               <el-icon>
                 <Menu />
-              </el-icon>上链
+              </el-icon>链操作
             </template>
             <el-menu-item-group>
-             <el-menu-item index="/college/verify-certificate">生成Hash</el-menu-item>
+             <el-menu-item index="/college/verify-certificate-college">生成Hash</el-menu-item>
               <el-menu-item index="/college/chain-upload">确认信息并上传</el-menu-item>
+              <el-menu-item index="/college/revoke-Certificate">撤销证书</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <el-sub-menu index="3">

@@ -58,9 +58,13 @@ const routes = [{
         name: 'ChainUpload',
         component: () => import('@/views/college/ChainUpload.vue')
       }, {
-        path: 'verify-certificate',
-        name: 'VerifyCertificate',
+        path: 'verify-certificate-college',
+        name: 'VerifyCertificateCollege',
         component: () => import('@/views/college/VerifyCertificate.vue')
+      }, {
+        path: 'revoke-Certificate',
+        name: 'RevokeCertificate',
+        component: () => import('@/views/college/RevokeCertificate.vue')
       }
     ]
   },
@@ -90,11 +94,20 @@ const routes = [{
       path: '/company/info',
       name: 'companyInfo',
       component: () => import('@/views/company/CompanyInfo.vue')
-    },{
+    }, {
       path: '/company/company-update-password',
       name: 'CompanyUpdatePassword',
       component: () => import('@/views/company/CompanyUpdatePassword.vue')
-    }]
+    }, {
+      path: '/company/query-student',
+      name: 'QueryStudent',
+      component: () => import('@/views/company/QueryStudent.vue')
+    },{
+        path: 'verify-certificate',
+        name: 'VerifyCertificate',
+        component: () => import('@/views/company/VerifyCertificate.vue')
+      }
+    ]
   }
 ]
 

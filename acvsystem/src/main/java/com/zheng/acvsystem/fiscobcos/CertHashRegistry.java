@@ -114,6 +114,7 @@ public class CertHashRegistry extends Contract {
         subscribeEvent(topic0,callback);
     }
 
+    //提交
     public TransactionReceipt issue(String certNo, String fileHash, BigInteger collegeId) {
         final Function function = new Function(
                 FUNC_ISSUE, 

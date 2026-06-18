@@ -17,11 +17,11 @@ public class AliOssUtil {
     //EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
 
     // 定义两个变量用于存储访问凭证
-    private static final String ACCESS_KEY_ID = "";
-    private static final String ACCESS_KEY_SECRET = "";
+    private static final String ACCESS_KEY_ID = "LTAI5tRmon4iHzyoAonjXCwJ";
+    private static final String ACCESS_KEY_SECRET = "NLA9KWHOSvZhF4APNuXVaTUhGxjNga";
 
     // 填写Bucket名称，例如：web-learning-hush。
-    private static final String BUCKET_NAME = "";
+    private static final String BUCKET_NAME = "acvs";
 
     public static String uploadFile(String objectName, InputStream in) throws Exception {
 

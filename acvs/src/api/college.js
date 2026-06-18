@@ -11,3 +11,8 @@ export const issueChainService = (chainData) => {
     // 发送post请求
     return request.post('/certificate/issue', chainData)
 }
+// 撤销证书服务
+export const revokeCertificateService = (certNo) => {
+    // 发送post请求，传递证书编号
+    return request.post('/certificate/revoke', certNo)
+}

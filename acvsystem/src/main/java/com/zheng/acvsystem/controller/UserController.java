@@ -1,12 +1,19 @@
 package com.zheng.acvsystem.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.zheng.acvsystem.anao.Role;
 import com.zheng.acvsystem.entity.Result;
 import com.zheng.acvsystem.entity.User;
+import com.zheng.acvsystem.service.CertificateService;
 import com.zheng.acvsystem.service.UserService;
 import com.zheng.acvsystem.utill.JwtUtil;
 import com.zheng.acvsystem.utill.Md5Util;
 import com.zheng.acvsystem.utill.ThreadLocalUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -26,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  * @author zzw
  * @since 2026-01-15
  */
-
+@Api(tags = "用户控制器")
 @Validated //开启参数校验
 @RestController
 @RequestMapping("/user")
@@ -37,6 +44,7 @@ public class UserController {
     private UserService userService;
 
     //注册接口
+    @ApiOperation("注册接口")
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password, @Role String role) {
         //判断用户名是否已存在
@@ -54,6 +62,7 @@ public class UserController {
     }
 
     //登录接口
+    @ApiOperation("登录接口")
     @PostMapping("/login")
     public Result<String> login(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password, @Role String role) {
         //根据用户名和密码查询用户
@@ -85,6 +94,7 @@ public class UserController {
     }
 
     //通过username查询用户信息
+    @ApiOperation("通过username查询用户信息接口")
     @GetMapping("/userInfo")
     public Result<User> getuserInfo() {
        /* 根据用户名查询用户
@@ -101,9 +111,10 @@ public class UserController {
         User user = userService.lambdaQuery().eq(User::getUsername, username).one();
         //为了不响应密码 需要将User对象中password属性添加JsonIgnore注解
         return Result.success(user);
-    }
+    } 
 
     //college用户更新基本信
+    @ApiOperation("用户更新基本信息接口")
     @PutMapping("/update")
     public Result updateByUserName(@RequestBody User user) {
         if (user.getRealName() == null || user.getIdCard() == null) {
@@ -125,6 +136,7 @@ public class UserController {
     }
 
     //更新密码
+    @ApiOperation("用户密码更新接口")
     @PutMapping("/update-password")
     public Result updatePassword(String username, @Pattern(regexp = "^\\S{5,16}$") String password) {
         //判断用户是否存在
@@ -134,9 +146,21 @@ public class UserController {
         //更新密码
         userService.lambdaUpdate().set(User::getPassword, Md5Util.getMD5String(password)).update();
         return Result.success("密码更新成功");
-    }   
+    }
 
-
-
-
+    /*//根据学院Id查询改学校学生信息返回分页page
+    @ApiOperation("根据学院Id查询改学校学生信息返回分页page接口")
+    @GetMapping("/page")
+    public Result getPageByCollegeID(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam Integer currentPage) {
+        //从ThreadLocal中获取学院Id
+        Map claims = (Map) ThreadLocalUtil.get();
+        //从claims中获取学院Id
+        Integer collegeID = (Integer) claims.get("ID");
+        //通过MybatisDb工具调用证书服务
+        IPage iPage = new IPage<>();
+        iPage.setPages(pageNum);
+        iPage.setSize(pageSize);
+        iPage.setCurrent(currentPage);
+        
+    }*/
 }

@@ -1,0 +1,26 @@
+测试证书号 NEWCERT=C20260602d5a4002
+
+===== [G1] 按学生姓名查证书-存在 =====
+HTTP: 200
+BODY: {"code":1,"message":"Cannot invoke \"com.zheng.acvsystem.entity.Certificate.getPdfPath()\" because \"certificate\" is null","data":null}
+
+===== [G2] 按学生姓名查证书-不存在(验证NPE) =====
+HTTP: 200
+BODY: {"code":1,"message":"Cannot invoke \"com.zheng.acvsystem.entity.Certificate.getPdfPath()\" because \"certificate\" is null","data":null}
+
+===== [SQL1] 数据库验证-命中正常证书PASS =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"验证结果：PASS"}
+
+===== [SQL2] 数据库验证-证书不存在(验证NPE) =====
+HTTP: 200
+BODY: {"code":1,"message":"Cannot invoke \"com.zheng.acvsystem.entity.Certificate.getId()\" because \"selectCertNo\" is null","data":null}
+
+===== [BC1] 区块链验证-三要素匹配PASS =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":{"id":44,"certId":5,"companyId":6,"verifyType":null,"result":"PASS","verifyTime":null}}
+
+===== [BC2] 区块链验证-fileHash篡改(验证NPE) =====
+HTTP: 200
+BODY: {"code":1,"message":"Cannot invoke \"com.zheng.acvsystem.entity.Certificate.getId()\" because \"CertNo\" is null","data":null}
+

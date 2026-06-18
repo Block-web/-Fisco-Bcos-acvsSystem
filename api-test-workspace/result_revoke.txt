@@ -1,0 +1,23 @@
+===== [G1b] get-certificate正常路径-显式UTF-8编码查询 =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"https://acvs.oss-cn-guangzhou.aliyuncs.com/apitest_cert.pdf"}
+
+===== [RV1] 撤销测试证书(上链) =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"撤销成功：Success"}
+
+[DB] 撤销后测试证书状态(status应为0):
+cert_no=C20260602d5a4002 status=0
+
+===== [SQL3] 数据库验证-已撤销证书应FAIL =====
+HTTP: 200
+BODY: {"code":1,"message":"该证书不存在与数据库或该证书已失效","data":null}
+
+===== [BC3] 区块链验证-已撤销证书应FAIL =====
+HTTP: 200
+BODY: {"code":1,"message":"该证书不存在与数据库或该证书已失效","data":null}
+
+===== [RV2] 撤销不存在的证书(边界) =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"撤销成功：already revoked"}
+

@@ -1,0 +1,11 @@
+===== [C1] 正常颁发证书(上链) =====
+HTTP: 200  耗时: 4.434365s
+BODY: {"code":0,"message":"操作成功","data":"证书颁发成功"}
+
+===== [C2] 异常-缺少必填字段studentName =====
+HTTP: 200  耗时: 0.032642s
+BODY: {"code":1,"message":"Validation failed for argument [0] in public com.zheng.acvsystem.entity.Result com.zheng.acvsystem.controller.CertificateController.issue(com.zheng.acvsystem.entity.Certificate) throws org.fisco.bcos.sdk.v3.transaction.model.exception.TransactionBaseException,org.fisco.bcos.sdk.v3.codec.ContractCodecException,java.io.IOException: [Field error in object 'certificate' on field 'studentName': rejected value [null]; codes [NotNull.certificate.studentName,NotNull.studentName,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [certificate.studentName,studentName]; arguments []; default message [studentName]]; default message [不能为null]] ","data":null}
+
+[DB] 新增的测试证书(id>4):
+id=5 | cert_no=C20260602d5a4002 | college=4 | status=1 | tx=0x2c51e4611e7951e458
+[INFO] 保存测试证书号: C20260602d5a4002

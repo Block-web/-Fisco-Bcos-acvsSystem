@@ -1,0 +1,51 @@
+===== [R1] 正常注册-院校COLLEGE =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"用户:apitest_col注册成功"}
+
+===== [R2] 正常注册-学生STUDENT =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"用户:apitest_stu注册成功"}
+
+===== [R3] 正常注册-企业COMPANY =====
+HTTP: 200
+BODY: {"code":0,"message":"操作成功","data":"用户:apitest_com注册成功"}
+
+===== [R4] 异常-用户名已存在 =====
+HTTP: 200
+BODY: {"code":1,"message":"用户名已存在","data":null}
+
+===== [R5] 异常-用户名过短(<5位) =====
+HTTP: 200
+BODY: {"code":1,"message":"register.username: 需要匹配正则表达式\"^\\S{5,16}$\"","data":null}
+
+===== [R6] 异常-非法角色ADMIN =====
+HTTP: 200
+BODY: {"code":1,"message":"register.role: 角色参数的值只能是 COLLEGE、STUDENT 或 COMPANY","data":null}
+
+===== [R7] 异常-密码过短(<5位) =====
+HTTP: 200
+BODY: {"code":1,"message":"register.password: 需要匹配正则表达式\"^\\S{5,16}$\"","data":null}
+
+===== [L1] 正常登录-COLLEGE =====
+BODY: {"code":0,"message":"操作成功","data":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicm9sZSI6IkNPTExFR0UiLCJpZCI6NCwidXNlcm5hbWUiOiJhcGl0ZXN0X2NvbCJ9LCJleHAiOjE3ODA0MDgzOTR9.DfedOpmMWj4gKC2kNpEnBwpXSGYrFCSQP1dMLcZvkFM"}
+提取COL_TOKEN长度: 185
+
+===== [L1b] 正常登录-STUDENT =====
+BODY: {"code":0,"message":"操作成功","data":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicm9sZSI6IlNUVURFTlQiLCJpZCI6NSwidXNlcm5hbWUiOiJhcGl0ZXN0X3N0dSJ9LCJleHAiOjE3ODA0MDgzOTV9.ozBspSFXDd5JpW-Oocl_HVTFg-S73o_guoJMfSo2MhA"}
+
+===== [L1c] 正常登录-COMPANY =====
+BODY: {"code":0,"message":"操作成功","data":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicm9sZSI6IkNPTVBBTlkiLCJpZCI6NiwidXNlcm5hbWUiOiJhcGl0ZXN0X2NvbSJ9LCJleHAiOjE3ODA0MDgzOTV9.i0RvOOVYooQQywwABk87RjmX7vsBae8gfFGtk-xGby4"}
+
+===== [L2] 异常-密码错误 =====
+HTTP: 200
+BODY: {"code":1,"message":"用户名或密码错误","data":null}
+
+===== [L3] 异常-角色不匹配 =====
+HTTP: 200
+BODY: {"code":1,"message":"用户名或密码错误","data":null}
+
+===== [L4] 异常-用户不存在 =====
+HTTP: 200
+BODY: {"code":1,"message":"用户名或密码错误","data":null}
+
+tokens.env 已保存

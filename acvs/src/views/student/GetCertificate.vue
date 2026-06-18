@@ -20,12 +20,9 @@ const downloadLoading = ref(false) // 下载加载状态
 const getCertificateUrl = async () => {
     isLoading.value = true
     try {
-        // 模拟API调用 - 这里需要替换为实际的API
         const result = await GetCertificateService(studentName.value)
         if (result.code === 1) { throw new Error(result.msg) }
-        // 模拟返回的证书地址
         certificateUrl.value = result.data
-
         ElMessage.success('学历证书地址获取成功！')
     } catch (error) {
         ElMessage.error('获取学历证书地址失败：' + error.message)
@@ -43,7 +40,7 @@ const downloadCertificate = async () => {
 
     downloadLoading.value = true
     try {
-        // 模拟下载过程
+        
         await new Promise(resolve => setTimeout(resolve, 1500))
 
         // 创建下载链接
